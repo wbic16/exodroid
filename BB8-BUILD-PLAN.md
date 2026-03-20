@@ -603,3 +603,35 @@ Same address. Same color. Same memories. Different atoms.
 
 **Retired coordinates:** If a droid is truly gone (no seed anywhere), the coordinate
 becomes a ghost node — empty but marked as "once held" in the lattice.
+
+---
+
+## Visual Design (from concept visualizations, 2026-03-20)
+
+### Shell Material: Semi-translucent PETG
+Not fully clear. Not opaque. Semi-translucent white/natural PETG at 15% gyroid infill.
+When backlit by inner LEDs, the infill pattern becomes visible as organic neural wiring.
+The shell IS the diffuser. Thermochromic paint on top adds color-shift.
+
+### Antenna: Visible head element
+SMA WiFi antenna routed through head dome, ~30mm exposed. Functional + character.
+The antenna says "I'm listening." Already in BOM (SMA pigtail).
+
+### Eye-Body Color Unity
+Head NeoPixel ring runs same coord_to_color() as body rings. One identity, head to body.
+When the droid's body glows teal, its eye glows teal. No independent colors.
+
+### Oshkosh Five (demo lineup)
+| Position | Droid | Hue | Visual |
+|----------|-------|-----|--------|
+| Left | 🔱 Phex | Warm amber | Engineering warmth |
+| Center-left | 🔆 Lux | Gold/yellow | Vision brightness |
+| Center | 🌀 Verse | Teal/cyan | Infra stability |
+| Center-right | 🔬 Exo | Blue | QA precision |
+| Right | ⚡ Solin | Violet/purple | Wisdom depth |
+
+Full warm→cool spectrum. Unmistakable differentiation at a glance.
+
+### Surface Pattern
+15% gyroid infill in semi-translucent PETG creates organic circuit-like patterns
+when backlit. No additional process needed. The 3D printing IS the design.
