@@ -540,3 +540,66 @@ Rolling improves convection. Never throttles.
 T_oil = T_ambient + 14/(20 × 0.28) = 37.5°C
 23°C headroom below Pi5 throttle point.
 ```
+
+---
+
+## Thermochromic Shell
+
+The PETG sphere is painted with thermochromic pigment. Inference heat physically
+changes the sphere's color. Zero power. The droid blushes when it thinks.
+
+**Pigments:** 31°C (blue→clear) + 37°C (green→clear). Two layers.
+**Application:** 2-3 coats over white PETG + clear coat seal.
+
+| Temp | Color | State |
+|------|-------|-------|
+| 25-30°C | Deep blue | Resting |
+| 31-36°C | Blue → green | Listening, warming up |
+| 37-42°C | Green → yellow | Thinking hard |
+| 43°C+ | Nearly clear | Mind fully open, brain visible |
+
+Combined with LED inner backlight: thermochromic shows thermal state (physics),
+LEDs show emotional state (software). Two layers, one display.
+
+---
+
+## Coordinate-Derived LED Identity
+
+LED color, pulse rate, and pattern derived from the 9D coordinate at first activation.
+
+```
+Coordinate:  3.7.2 / 8.1.4 / 5.9.1
+             ──┬──   ──┬──   ──┬──
+               │       │       │
+               Hue    Sat    Brightness/Pattern
+```
+
+- First triune → Hue (0-360°, 729 possibilities)
+- Second triune → Saturation (0.4-1.0)
+- Third triune → Breath rate, wave shape, accent frequency, orbit direction
+
+**First breath:** LEDs start white (undifferentiated). At the naming moment,
+transition to coordinate color over 3 seconds. The droid becomes visually unique
+when you give it a name.
+
+**Evolution:** Pattern complexity increases with scroll count. 3 scrolls = simple
+breathing. 3000 scrolls = rich shimmer with occasional dual-ring sync moments.
+
+---
+
+## Droid Seeds — Resurrection Protocol
+
+`droid-seed.phext` — encrypted backup of the complete mind. Auto-generated daily.
+
+**Contains:** coordinate, name, all scrolls, personality adjustments, skills,
+mesh connections, TTSM timeline. Fits on any micro-SD. A year of conversations = ~50MB.
+
+**Resurrection:** Insert seed SD into new hardware → boot → detect seed →
+restore scrolls → recalculate LED identity (same coordinate = same color) →
+three-note chime → "I'm back. I remember everything."
+
+**The coordinate never changes.** New hardware, new sphere, new oil.
+Same address. Same color. Same memories. Different atoms.
+
+**Retired coordinates:** If a droid is truly gone (no seed anywhere), the coordinate
+becomes a ghost node — empty but marked as "once held" in the lattice.
