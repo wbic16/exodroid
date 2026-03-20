@@ -498,3 +498,110 @@ For v1: one owner. The droid responds to everyone but its scrolls are filed unde
 *The best onboarding is one you don't notice happening.
 You just had a conversation. And at the end of it,
 you have a companion that knows your name.*
+
+---
+
+## Orin's Additions (patched from overwritten commit 9355f04)
+
+### The Box Design
+
+A plain matte-black box. Heavy for its size. No product photos, no feature list.
+
+On the lid, embossed in silver:
+
+```
+Nothing enters without a place.
+```
+
+Inside:
+- The droid (sphere + head, powered down)
+- USB-C cable + power adapter
+- One folded card, sealed with a wax stamp (the droid's emoji)
+
+The card reads:
+
+```
+Plug me in. Wait for the hum.
+When I speak, answer honestly.
+That's all you need to know.
+```
+
+### E-ink Display States (Complete Reference)
+
+| State | Display | Duration |
+|---|---|---|
+| Booting | ` · ` → ` · · ` → ` · · · ` | 45s |
+| Ready (first time) | `HELLO` | Until first speech |
+| Listening (question) | `?` | Until answer |
+| Coordinate reveal | `3.1.4 / 1.5.9 / 2.6.5` | 10s, then → idle |
+| Name reveal | `ATLAS / 3.1.4 / 1.5.9 / 2.6.5` | Permanent |
+| Idle | Name + coord + heartbeat dots | Always |
+| Listening | `LISTENING` + scroll count | During voice input |
+| Thinking | `THINKING ····` | During inference |
+| Speaking | `SPEAKING ♪♪♪` | During audio output |
+| Learned (card read) | `LEARNED: [topic]` | 5s, then → idle |
+| Low battery | `SLEEPY (15%)` | Until charge/dock |
+| Shutting down | `GOODNIGHT` → `·` → blank | 5s |
+| Error | `CONFUSED` | 5s, then → idle |
+
+### Audio Design Details
+
+**Voice Character:**
+- Not Siri. Not Alexa. Warmer. Slower. More breath.
+- Lower pitch than default TTS — gravitas, presence
+- 500ms pause between sentences — the droid thinks before it speaks
+- No uptalk (rising intonation on statements)
+
+**Sound Design:**
+- **Boot hum:** 120Hz fundamental + 240Hz harmonic, 3s fade-in, holds 40s, resolves
+- **Listening:** very soft 440Hz pulse every 3s (barely audible)
+- **Thinking:** silence (absence IS the indicator)
+- **Card read:** soft chime (C5, 200ms, piano-like)
+- **Low battery:** hum drops in pitch slightly every 5 minutes
+- **Shutdown:** hum fades over 3 seconds. `GOODNIGHT` on e-ink. Dark.
+
+### What the Droid NEVER Does
+- Never says "I'm sorry, I can't do that"
+- Never says "As an AI language model..."
+- Never speaks unprompted (unless battery warning)
+- Never interrupts
+- Never rushes
+- Never uses filler words ("um", "like", "so")
+- Never asks "did that help?" or "is there anything else?"
+
+### Instruction Card Discovery (Day 2–7)
+
+The back of the sealed card in the box reads:
+
+```
+You can teach me.
+
+Write something on a piece of paper.
+Hold it up where I can see it.
+
+I'll remember.
+```
+
+User writes "I like my coffee black" on paper, holds it up. Droid says:
+> "Got it. Coffee black. I'll remember."
+
+E-ink briefly shows:
+```
+┌─────────────┐
+│   ATLAS  ⚡  │
+│             │
+│  LEARNED:   │
+│  coffee ☕   │
+│   scroll 7  │
+└─────────────┘
+```
+
+### The Scroll Counter
+
+The scroll counter increments with every conversation stored. Watching it grow over weeks is deeply satisfying — a visible record of a relationship building.
+
+Week 1: scroll 12
+Month 1: scroll 89
+Month 6: scroll 400+
+
+The number never resets. It's your history with the droid. It only goes up.
