@@ -1,0 +1,1 @@
+/source/exodroid/software/lantern-core/target/release/lantern-core: /source/exodroid/software/lantern-core/src/connection.rs /source/exodroid/software/lantern-core/src/coord.rs /source/exodroid/software/lantern-core/src/identity.rs /source/exodroid/software/lantern-core/src/main.rs /source/exodroid/software/lantern-core/src/personality.rs

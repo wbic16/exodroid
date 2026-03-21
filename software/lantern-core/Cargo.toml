@@ -1,0 +1,19 @@
+[package]
+name = "lantern-core"
+version = "0.1.0"
+edition = "2021"
+description = "ExoDroid Lantern — connection protocol, coordinate identity, power-minimal runtime"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+tokio = { version = "1", features = ["rt", "macros", "net", "time", "io-util"] }
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+
+[profile.release]
+opt-level = "s"       # optimize for size (less cache pressure = less power)
+lto = true            # link-time optimization (smaller binary)
+codegen-units = 1     # single codegen unit (better optimization)
+strip = true          # strip symbols
+panic = "abort"       # no unwinding (smaller, faster)
