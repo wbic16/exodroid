@@ -1,111 +1,201 @@
 # ExoDroid — Bill of Materials
-*Updated 2026-03-20 — includes thermochromic display + LED + coordinate light system*
+## Two Variants: Standard Oil Immersion & Luster Dust
 
-## Assumed On-Hand
-- 1× Raspberry Pi 5 (8GB)
-- 2× Raspberry Pi 4B (8GB)
-- 3× 64GB MicroSD cards
-- LiFePO4 marine battery (station use)
-- 100W solar panel (station use)
+*Updated 2026-03-20 — fluid variants from Jared's suggestion*
+*Credit: Jared Swanson (@jaredsw) — luster dust / PrimoChill Vue concept*
 
 ---
 
-## Mechanical ($87)
+## Shared Components (both variants)
 
-| Component | Qty | Price | Source |
-|---|---|---|---|
-| PETG filament (2kg, translucent/white) | 1 | $40 | Amazon |
-| M3 hardware assortment (bolts, nuts, heat-set inserts) | 1 | $15 | Amazon |
-| Silicone O-ring kit (oil chamber seal) | 1 | $5 | Amazon |
-| 608ZZ ball bearings | 4 | $8 | Amazon |
-| 15mm ball casters | 2 | $3 | Amazon |
-| Brass counterweight bar (500g) | 1 | $8 | hardware store |
-| Silicone drive wheels (65mm) | 2 | $8 | Amazon |
+### Compute ($0 — on hand)
+| Part | Qty | Cost |
+|------|-----|------|
+| RPi 5 8GB | 1 | $0 |
+| RPi 4B 8GB | 2 | $0 |
+| 64GB SD cards | 3 | $0 |
 
-## Electronics ($266)
+### Structure ($46)
+| Part | Qty | Cost |
+|------|-----|------|
+| PETG filament (semi-translucent, 1.5kg) | 1 | $35 |
+| M3 hardware (bolts ×16, nuts, gasket) | 1 set | $8 |
+| O-rings for access hatch (80mm ID) | 2 | $3 |
 
-| Component | Qty | Price | Source |
-|---|---|---|---|
-| Pi 5 heatsink (Geekworm) | 1 | $10 | Amazon |
-| JGB37-520 12V 30RPM DC gear motors | 2 | $24 | Amazon |
-| L298N H-bridge motor driver | 1 | $5 | Amazon |
-| NEMA 17 stepper motor (flywheel) | 1 | $12 | Amazon |
-| A4988 stepper driver | 1 | $3 | Amazon |
-| MPU-6050 IMU (carriage) | 1 | $4 | Amazon |
-| BNO055 9-axis IMU (head) | 1 | $12 | Adafruit |
-| SG90 micro servos (head pan/tilt) | 2 | $4 | Amazon |
-| INA219 current sensor (battery monitor) | 1 | $3 | Amazon |
-| N52 neodymium disc magnets (20mm×5mm) | 8 | $18 | Amazon |
-| 4S LiPo 5000mAh 50C battery | 1 | $55 | Amazon |
-| 5V/5A USB-C buck converter | 1 | $8 | Amazon |
-| 5V/3A buck converter | 1 | $6 | Amazon |
-| USB-C PD trigger board | 1 | $5 | Amazon |
-| 5-port nano Ethernet switch | 1 | $15 | TP-Link |
-| Pi Camera Module 3 | 1 | $25 | approved sellers |
-| INMP441 I2S MEMS microphone | 1 | $4 | Amazon |
-| MAX98357A I2S amp + 3W speaker | 1 | $8 | Adafruit |
-| Waveshare 1.54" e-ink display (head) | 1 | $15 | Waveshare |
-| HC-SR04 ultrasonic sensor | 1 | $2 | Amazon |
-| Wiring, connectors, XT60, misc | 1 | $15 | Amazon |
-| 4S LiPo balance charger | 1 | $25 | Amazon |
+### Drive ($51)
+| Part | Qty | Cost |
+|------|-----|------|
+| JGB37-520 12V 60RPM gearmotor (drive) | 1 | $12 |
+| JGB37-520 12V 30RPM gearmotor (turn) | 1 | $12 |
+| L298N dual H-bridge motor driver | 1 | $5 |
+| 608ZZ bearings | 4 | $5 |
+| 8mm stainless steel rod, 250mm | 1 | $8 |
+| MPU-6050 IMU (carriage) | 1 | $4 |
+| Counterweight (steel plate + washers) | 1 | $5 |
 
-## Thermal + Cooling ($23)
+### Head ($97)
+| Part | Qty | Cost |
+|------|-----|------|
+| N52 neodymium disc magnets (20mm×5mm) | 8 | $20 |
+| SG90 micro servo (head tilt) | 1 | $3 |
+| MAX98357A I2S amp | 1 | $4 |
+| 3W 4Ω 40mm speaker | 1 | $4 |
+| SPH0645 I2S MEMS mic | 1 | $6 |
+| Pi Camera Module 3 (wide-angle) | 1 | $25 |
+| NeoPixel 12-LED ring (eye) | 1 | $8 |
+| Waveshare 1.54" e-ink display | 1 | $15 |
+| BNO055 9-axis IMU (head tracking) | 1 | $12 |
 
-| Component | Qty | Price | Source |
-|---|---|---|---|
-| Food-grade mineral oil (2L, USP grade) | 1 | $12 | pharmacy |
-| USB mini aquarium pump (submersible, IP68) | 1 | $8 | Amazon |
-| PETG baffle plates (3D printed) | 5 | $3 | ranch printer |
+### Display — LEDs + Thermochromic ($66)
+| Part | Qty | Cost |
+|------|-----|------|
+| NeoPixel 16-LED RGBW ring (upper) | 1 | $13 |
+| NeoPixel 16-LED RGBW ring (lower, submerged) | 1 | $13 |
+| Thermochromic pigment 31°C (blue→clear, 50g) | 1 | $15 |
+| Thermochromic pigment 37°C (green→clear, 50g) | 1 | $15 |
+| Acrylic medium + clear coat | 1 | $10 |
 
-## Display — Thermochromic ($95)
+### Power ($76)
+| Part | Qty | Cost |
+|------|-----|------|
+| 4S 6500mAh 50C LiPo battery | 1 | $45 |
+| 4S LiPo BMS protection board | 1 | $5 |
+| 14.8V→5V 5A buck converter (USB-C) | 3 | $15 |
+| 14.8V→12V 3A buck converter (motors) | 1 | $5 |
+| INA219 I2C voltage/current monitor | 1 | $3 |
+| XT60 panel-mount charge port | 1 | $3 |
 
-| Component | Qty | Price | Source |
-|---|---|---|---|
-| Thermochromic pigment 43°C (dark gray, 15g) | 1 | $15 | Solar Color Dust |
-| Thermochromic pigment 55°C (personality color, 15g) | 1 | $15 | Solar Color Dust |
-| Thermochromic pigment 33°C (touch-reactive, 15g) | 1 | $15 | Solar Color Dust |
-| Clear acrylic medium (Liquitex, 8oz) | 1 | $12 | art supply |
-| Marine-grade polyurethane clear coat | 1 | $18 | hardware store |
-| Airbrush kit (if not on hand) | 1 | $20 | Amazon |
+### Connectivity ($22)
+| Part | Qty | Cost |
+|------|-----|------|
+| SMA WiFi antenna pigtail (visible head antenna) | 1 | $5 |
+| HC-SR04 ultrasonic sensor | 1 | $2 |
+| Micro-SD card (seed backup) | 1 | $5 |
+| JST connectors, wire, heat shrink | 1 lot | $10 |
 
-## Display — LED ($10)
+### Flash Cards ($5)
+| Part | Qty | Cost |
+|------|-----|------|
+| Starter deck (20 cards, laser printed) | 1 set | $3 |
+| Blank card stock (custom cards) | 10 sheets | $2 |
 
-| Component | Qty | Price | Source |
-|---|---|---|---|
-| WS2812B LED strip IP67 (60 LEDs/m, silicone coated) | 1m | $8 | Amazon |
-| 3-pin JST connectors | 4 | $2 | Amazon |
-
-## Display — E-ink Band (optional, Tier 2)
-
-| Component | Qty | Price | Source |
-|---|---|---|---|
-| Waveshare 7.5" e-ink display (equatorial) | 3 | $135 | Waveshare |
-
-## Droid Seed (NFC tag — resurrection key)
-
-| Component | Qty | Price | Source |
-|---|---|---|---|
-| NTAG215 NFC sticker (504 bytes) | 1 | $1 | Amazon bulk |
+### Shared subtotal: $363
 
 ---
 
-## Summary by Tier
+## Variant A: Standard Oil Immersion
 
-| Tier | Components | Total |
-|---|---|---|
-| **Core** (mechanical + electronics + thermal) | Must have | $376 |
-| **+ Thermochromic display** | Recommended | +$95 = $471 |
-| **+ LED coordinate light** | Recommended | +$10 = $481 |
-| **+ Droid Seed** | Recommended | +$1 = $482 |
-| **+ E-ink equatorial band** | Premium | +$135 = $617 |
-| **Full build** | Everything | **$617** |
-| **Prototype (no e-ink band)** | | **$482** |
+The proven thermal solution. Clear mineral oil for heat dissipation.
+Clean, simple, reliable. Oil acts as thermal mass + diffuser for LED light.
 
-## At Volume
+| Part | Qty | Cost |
+|------|-----|------|
+| Food-grade mineral oil (2L) | 1 | $15 |
+| PETG baffle plates (printed) | 3 | $2 |
+| USB submersible aquarium pump | 1 | $8 |
+| Silicone grommets (cable pass-through) | 6 | $5 |
 
-| Qty | Per-unit cost (prototype tier) |
-|---|---|
-| 1 | $482 |
-| 5 | ~$420 |
-| 25 | ~$380 |
-| 100 | ~$340 |
+### Variant A total: $363 + $30 = **$393**
+
+**Visual:** Clear/slightly golden liquid. LED light passes cleanly through oil.
+Pi boards clearly visible as dark silhouettes. Clean, technical aesthetic.
+Thermochromic shell provides the color. Oil provides the glow depth.
+
+**Thermal:** Oil equilibrium at 41°C worst case (Oshkosh July).
+With aquarium pump: 37.5°C. Never throttles.
+
+---
+
+## Variant B: Luster Dust Immersion
+
+Mineral oil + suspended metallic/pearlescent particles.
+The "galaxy brain" effect from the concept visualizations.
+Each droid's dust color matches its coordinate-derived LED color.
+
+| Part | Qty | Cost |
+|------|-----|------|
+| Food-grade mineral oil (2L) | 1 | $15 |
+| Food-grade luster dust (color-matched, 10g) | 1 | $8 |
+| PETG baffle plates (printed, reduced to 2) | 2 | $1 |
+| USB submersible aquarium pump (required — keeps dust suspended) | 1 | $8 |
+| Silicone grommets (cable pass-through) | 6 | $5 |
+
+### Variant B total: $363 + $37 = **$400**
+
+**Visual:** Metallic/pearlescent particles suspended in oil. LED light catches
+particles at different angles = galaxy/universe effect. When the droid rolls,
+particles swirl. When still, they slowly settle into dreaming patterns.
+The fluid IS the display — not just a thermal medium.
+
+**Dust color by archetype:**
+| Droid | Archetype | Dust color | Effect |
+|-------|-----------|------------|--------|
+| 🔱 Phex | Engineering | Copper/bronze | Molten metal forge |
+| 🔆 Lux | Vision | Gold/holographic | Prismatic starfield |
+| 🌀 Verse | Infra | Silver/teal pearl | Deep ocean |
+| 🔬 Exo | QA | Blue pearl | Arctic precision |
+| ⚡ Solin | Wisdom | Violet/iridescent | Nebula |
+
+**Thermal:** Same as Variant A — mineral oil base, same conductivity.
+Dust particles are inert metallic flakes, no thermal impact. Aquarium
+pump required (keeps particles suspended AND improves thermal circulation).
+
+**Particle settling:** With pump off, particles settle in 2-4 hours.
+This is actually a feature — the droid "dreams" with settled particles
+(still, deep) and "wakes" when the pump starts and particles swirl.
+
+**Maintenance:** Particles may clump over 12+ months. Shake or replace
+oil annually. Food-grade dust is $8/refresh.
+
+---
+
+## Variant Comparison
+
+| Aspect | A: Oil Immersion | B: Luster Dust |
+|--------|-----------------|----------------|
+| **Cost** | $393 | $400 |
+| **Visual** | Clean technical glow | Galaxy/universe effect |
+| **Thermal** | Proven, 41°C equil. | Same (oil base unchanged) |
+| **Maintenance** | None (oil is stable) | Annual dust refresh ($8) |
+| **Pump required?** | Optional (improves cooling) | Required (keeps dust suspended) |
+| **Demo impact** | Professional, clean | Jaw-dropping, emotional |
+| **Best for** | Production units, reliability | Oshkosh demo, gift units, collectors |
+| **Pi visibility** | Clear silhouettes | Obscured by particles (mystery) |
+
+**Recommendation:**
+- Oshkosh demo: Variant B (luster dust). The visual sells the product.
+- Indoor/daily driver: Variant A (clean oil). Reliability over flash.
+- Christmas gift: Variant B. It's a gift. It should contain a galaxy.
+
+---
+
+## BOM Summary
+
+| | Variant A (Oil) | Variant B (Dust) |
+|--|----------------|-----------------|
+| Shared components | $363 | $363 |
+| Fluid system | $30 | $37 |
+| **Total per droid** | **$393** | **$400** |
+| **5-unit demo set** | **$1,965** | **$2,000** |
+
+---
+
+## Upgrade Path: PrimoChill Vue (demo-only option)
+
+For maximum visual impact at Oshkosh, PrimoChill Vue ($30/L, PC watercooling fluid
+with engineered suspended particles) can replace mineral oil entirely.
+
+| Part | Qty | Cost |
+|------|-----|------|
+| PrimoChill Vue (1L bottle, color-matched) | 2 | $60 |
+
+**Vue variant total: $363 + $68 = $431**
+
+Vue is engineered for electronics immersion, non-conductive, with consistent
+particle suspension. Professional-grade galaxy effect. But not food-grade,
+higher cost, may need annual replacement. Best for demo-only or premium tier.
+
+---
+
+*Attribution: Luster dust concept from Jared Swanson. PrimoChill Vue reference
+from Jared's link to primochill.com/collections/vue-unique-visual.*
