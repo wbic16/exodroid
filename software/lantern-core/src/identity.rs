@@ -4,7 +4,7 @@ use crate::coord::Coord9D;
 use crate::personality::Personality;
 
 /// Complete droid identity — everything derived from the initiation answer
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct DroidIdentity {
     /// User-chosen name (spoken during initiation)
     pub name: String,

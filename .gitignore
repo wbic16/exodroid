@@ -1,2 +1,3 @@
 firmware/target/
 *.o
+software/lantern-core/target/
