@@ -192,6 +192,23 @@ oil annually. Food-grade dust is $8/refresh.
 - Standard (2.9" G): Head stays ~$97 (net -$3 from old 1.54" price)
 - Premium (3.6" color): Head goes to $115 (+$18)
 
+
+## Equatorial E-ink Band (optional body display)
+
+Wrap the sphere equator with e-ink panels for scrolling coordinate data, scroll count, mood.
+Best panels by aspect ratio for a belt around a 300mm sphere (circumference: 942mm):
+
+| Option | Panels | Dimensions | Coverage | Cost | Notes |
+|--------|--------|-----------|----------|------|-------|
+| 3× 3.97" (G) | 3 | 85×50mm ea | 255mm / 27% | **$45** | Budget. Gaps visible. |
+| 3× 5.79" (G) | 3 | 125×45mm ea | 375mm / 40% | **$54** | **Recommended.** Wide+narrow = belt-shaped. 4-color. |
+| 2× 10.85" | 2 | 235×82mm ea | 470mm / 50% | **$150** | Seamless dual-panel. Dramatic. |
+| 3× 7.5" (H) | 3 | 163×98mm ea | 489mm / 52% | **$144** | Maximum coverage but tall panels bulge on curve. |
+
+**Recommended: 3× 5.79" (G) at $54.** Wide×narrow aspect ratio wraps the equator naturally.
+The 792×272 resolution gives 2376 total horizontal pixels across three panels — enough to scroll
+coordinate data, personality markers, and scroll history as a continuous ticker.
+
 ## BOM Summary
 
 | | Variant A (Oil) | Variant B (Dust) |
