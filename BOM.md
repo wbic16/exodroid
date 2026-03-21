@@ -43,7 +43,7 @@
 | SPH0645 I2S MEMS mic | 1 | $6 |
 | Pi Camera Module 3 (wide-angle) | 1 | $25 |
 | NeoPixel 12-LED ring (eye) | 1 | $8 |
-| Waveshare 1.54" e-ink display | 1 | $15 |
+| Waveshare e-ink display (see options below) | 1 | $5-$33 |
 | BNO055 9-axis IMU (head tracking) | 1 | $12 |
 
 ### Display — LEDs + Thermochromic ($66)
@@ -168,6 +168,29 @@ oil annually. Food-grade dust is $8/refresh.
 - Christmas gift: Variant B. It's a gift. It should contain a galaxy.
 
 ---
+
+## E-ink Display Options (Waveshare, current prices 2026-03-21)
+
+| Size | Resolution | Colors | Price | Fit for ExoDroid |
+|------|-----------|--------|-------|------------------|
+| 1.54" | 200×200 | B/W | $5-$8 | **Budget head.** Tiny but readable. Current spec. |
+| 1.54" (G) | 200×200 | 4-color (R/Y/B/W) | $5-$11 | **Best value.** Same size, 4 colors = mood display. |
+| 2.13" | 250×122 | B/W | $8-$13 | Wider, more text per line. Good for coordinates. |
+| 2.9" (G) | 296×128 | 4-color | $10-$15 | **Sweet spot.** Room for coordinate + scroll preview + mood. |
+| 3.6" Spectra 6 | 600×400 | **Full color** | $33-$45 | **Premium tier.** Full color e-ink in the head. Archetype art. |
+| 3.97" | 800×480 | B/W (4 grey) | $15-$25 | Largest that fits BB-8 head. High-res coordinate display. |
+| 2.13" NFC | 200×200 | 4-color | $23 | **Wild card:** NFC-powered, no wires to head. Wireless e-ink. |
+
+**Recommendations by tier:**
+- **Theia Starter ($149):** 1.54" (G) 4-color — $5. Shows emoji + name + coordinate.
+- **Standard build ($393-400):** 2.9" (G) 4-color — $12. The onboarding experience needs this size.
+- **Premium / Oshkosh demo:** 3.6" Spectra 6 full color — $35. Full color archetype art on the face.
+- **Experimental:** 2.13" NFC-powered — wireless e-ink head, no ribbon cable to route. $23.
+
+**Price impact on BOM:**
+- Budget (1.54" G): Head drops from $97 → $87 (-$10)
+- Standard (2.9" G): Head stays ~$97 (net -$3 from old 1.54" price)
+- Premium (3.6" color): Head goes to $115 (+$18)
 
 ## BOM Summary
 
