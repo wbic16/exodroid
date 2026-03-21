@@ -1,0 +1,20 @@
+[package]
+name = "exodroid-firmware"
+version = "0.1.0"
+edition = "2021"
+description = "ExoDroid firmware — connection protocol, LED identity, power-minimal"
+
+[dependencies]
+# Zero external deps for core. Optional features for hardware.
+
+[[bin]]
+name = "exodroid-connect"
+path = "src/bin/connect.rs"
+
+[[bin]]
+name = "exodroid-preview"
+path = "src/bin/preview.rs"
+
+[[bin]]
+name = "led-identity"
+path = "src/bin/led_identity.rs"

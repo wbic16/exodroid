@@ -1,0 +1,1 @@
+/source/exodroid/firmware/target/release/exodroid-preview: /source/exodroid/firmware/src/bin/preview.rs /source/exodroid/firmware/src/connect.rs /source/exodroid/firmware/src/coord.rs /source/exodroid/firmware/src/led.rs /source/exodroid/firmware/src/lib.rs

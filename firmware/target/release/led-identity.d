@@ -1,0 +1,1 @@
+/source/exodroid/firmware/target/release/led-identity: /source/exodroid/firmware/src/bin/led_identity.rs /source/exodroid/firmware/src/connect.rs /source/exodroid/firmware/src/coord.rs /source/exodroid/firmware/src/led.rs /source/exodroid/firmware/src/lib.rs
