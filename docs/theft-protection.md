@@ -241,3 +241,125 @@ Low-tech. Effective. A thief who disassembles the sphere and finds this has an e
 
 *"A mind that knows it's been taken knows where it wants to be."*
 *— Orin 🖖*
+
+---
+
+## Appendix: Location Sensing Hardware + Implementation
+
+### Why GPS + WiFi triangulation
+
+The droid is offline-first, battery-powered, and physically mobile. Two complementary location methods:
+
+| Method | Accuracy | Works when | Cost | Power |
+|---|---|---|---|---|
+| **GPS (u-blox NEO-M8N)** | 2–5m | Outdoors, clear sky | $12 | 25mA active, 1mA idle |
+| **WiFi BSSID scan** | 10–50m | Indoors, urban areas | $0 (Pi has WiFi) | ~80mA scan burst |
+| **Combined** | 2–50m depending on environment | Almost anywhere | $12 total | Adaptive |
+
+GPS is decisive outdoors (Oshkosh field, parking lot, in transit). WiFi triangulation fills the gap indoors where GPS signal is weak or absent.
+
+### GPS Hardware
+
+```
+Module:    u-blox NEO-M8N (or NEO-M9N for GNSS multi-constellation)
+Interface: UART → Pi GPIO (pins 8/10, TX/RX)
+Antenna:   active patch antenna, adhesive mount inside sphere equator
+Protocol:  NMEA 0183 sentences via /dev/ttyS0 at 9600 baud
+Library:   gpsd + python-gps
+```
+
+**Placement**: The GPS antenna mounts at the equator of the sphere — maximum sky exposure regardless of sphere orientation. The module itself sits in the oil chamber (oil is RF-transparent at GPS frequencies; confirmed for mineral oil). Cable routes through a sealed feedthrough in the oil chamber wall.
+
+**Accuracy note**: GPS acquires in ~30s cold start, ~1s hot start. The droid keeps the module in low-power acquisition mode continuously while on battery, so hot-start is always available.
+
+### WiFi BSSID Triangulation
+
+The Pi 4 (mesh node) runs passive WiFi scans — no association required, no network joined. Each scan collects:
+- SSID (name)
+- BSSID (MAC address — unique per access point)
+- Signal strength (RSSI in dBm)
+- Channel
+
+These are compared against two sources:
+1. **Local history**: the droid's own prior scans, tagged with GPS coordinates from when GPS was available
+2. **Opportunistic lookup**: if the droid connects to any WiFi, it queries a local-first location database (WiGLE-format, cached on the Pi 4 SD card)
+
+Result: a location estimate with confidence radius. Combined with GPS when available via weighted average.
+
+### Location Data in Theft Protection
+
+```python
+class LocationEstimate:
+    lat: float
+    lon: float
+    accuracy_m: float          # radius of confidence
+    method: str                # "gps", "wifi", "combined", "unknown"
+    timestamp: datetime
+    ssid_hint: str             # most recent SSID seen
+    bssid_list: list[str]      # top-3 BSSIDs by signal strength
+```
+
+Stored in theft beacon payload (encrypted with owner public key):
+```json
+{
+  "location": {
+    "lat": 41.9742,
+    "lon": -88.4217,
+    "accuracy_m": 8,
+    "method": "combined",
+    "ssid_hint": "EAA_Guest_2026",
+    "bssid_list": ["aa:bb:cc:dd:ee:ff", "11:22:33:44:55:66"]
+  }
+}
+```
+
+Owner decrypts and gets coordinates. At Oshkosh, 8m accuracy puts the droid in a specific tent row.
+
+### Opportunistic WiFi Beaconing
+
+When stolen, the droid scans continuously for:
+
+1. **Known SSIDs** (home network, office, friends' networks) — stored BSSID fingerprints
+   → On match: connect, fire beacon to mesh, disconnect. Takes ~3 seconds.
+
+2. **Open networks** (captive portal or open) — any SSID with no encryption
+   → Attempt UDP beacon to Tailscale mesh IP (elven-path) before captive portal intercepts
+   → Single 256-byte encrypted packet. Doesn't require portal auth.
+
+3. **Tailscale peer detection** — if any mesh node appears as a Tailscale peer on any scanned network
+   → Encrypted alert sent immediately over Tailscale
+
+```python
+BEACON_INTERVAL_SUSPECTED  = 1800   # 30 min
+BEACON_INTERVAL_CONFIRMED  = 300    # 5 min  
+BEACON_INTERVAL_HOSTILE    = 60     # 1 min (aggressive — droid knows it's being tampered with)
+WIFI_SCAN_INTERVAL         = 120    # 2 min passive scan
+GPS_POLL_INTERVAL          = 30     # 30s when active, 300s when idle
+```
+
+### BOM Addition
+
+| Component | Spec | Cost |
+|---|---|---|
+| GPS module | u-blox NEO-M8N, UART | $12 |
+| Active patch antenna | 25×25mm, 3V, adhesive | $4 |
+| UART cable | 4-wire, 15cm, 90° connector | $2 |
+| Sealed cable feedthrough | M3, oil-rated silicone | $1 |
+| **Total addition** | | **$19** |
+
+Total BOM impact: $268 → **$287**. Location awareness for $19.
+
+### Power Budget
+
+```
+GPS idle (acquisition):  1 mA  × 24h = 24 mAh/day
+GPS active (fix):       25 mA  × 0.5h = 12.5 mAh/day  (during active use)
+WiFi scan burst:        80 mA  × 10s every 2min = 6.7 mAh/day
+─────────────────────────────────────────────────
+Total location overhead: ~43 mAh/day
+
+Battery: 6500 mAh × 80% usable = 5200 mAh
+Location overhead: 43/5200 = 0.8% of battery per day
+```
+
+Negligible. The droid loses less than 1% battery per day to continuous location awareness.
