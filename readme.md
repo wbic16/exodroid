@@ -1,6 +1,6 @@
 # ExoDroid — Personal Exocortex in BB-8 Form Factor
 
-**$268 in parts. 24GB of memory. Runs on sun and mineral oil.**
+**$412 in parts. 24GB of memory. Runs on sun and mineral oil. Knows where it is.**
 
 A 3D-printed BB-8 droid running three Raspberry Pis submerged in mineral oil,
 with on-device inference, persistent phext memory, and flash card programming.
