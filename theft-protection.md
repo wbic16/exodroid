@@ -317,6 +317,148 @@ content: {
 
 ---
 
+## Location Layer — GPS + Opportunistic WiFi
+
+### Hardware
+
+**GPS module:** u-blox NEO-M8N (or equivalent M8/M10 series)
+- ~$15 — ceramic patch antenna, UART interface, 1Hz position fix
+- Mounts inside the sealed carriage frame, antenna wire exits through existing cable grommet
+- Draws ~35mA active, 11mA power-save — negligible vs LiPo capacity
+- Cold start: ~26s to first fix outdoors. Warm start: <1s
+
+**WiFi:** the mesh Pi (Pi 4, motor control node) already has onboard 2.4/5GHz WiFi.
+No additional hardware. The antenna pigtail in the existing BOM routes to the head for external antenna visibility. WiFi scanning requires no connection — passive BSSID scan works even with no joinable network.
+
+### Normal Operation (non-theft)
+
+During normal operation the droid logs location silently to the phext seed every 5 minutes:
+
+```
+phext coordinate: location/history/YYYY-MM-DD/HH-MM
+content: {
+  "ts": "ISO8601",
+  "gps": { "lat": 41.2565, "lon": -95.9345, "alt": 304.2, "acc_m": 4.1, "fix": "3d" },
+  "wifi": [
+    { "ssid": "Ranch-Main", "bssid": "aa:bb:cc:dd:ee:ff", "rssi": -42 },
+    { "ssid": "Ranch-IoT",  "bssid": "aa:bb:cc:dd:ee:fe", "rssi": -67 }
+  ],
+  "tailscale_ip": "100.x.x.x",
+  "mode": "normal"
+}
+```
+
+**Privacy:** location history is encrypted with the phext key. Never transmitted without owner consent. Never shared across resonance tiers (even Family). This is the owner's data only.
+
+**Last-known anchor:** the most recent fix before theft is the `last_location` field in the theft alert. If the droid is taken indoors where GPS is lost, the last outdoor fix + WiFi BSSID fingerprint together place it within ~100m.
+
+### Theft Mode — Location Tracking
+
+**GPS priority:** every 30 seconds while in theft mode (vs 5 minutes normally).
+
+**WiFi scanning:** every 60 seconds — passive BSSID scan, no association required. Captures whatever networks are visible at the thief's location.
+
+**Opportunistic connectivity:**
+```
+Priority order when trying to send a location alert:
+  1. Tailscale (existing VPN — instant if thief has internet)
+  2. Open WiFi (any unencrypted network in range — join, send, disconnect)
+  3. Captive portal WiFi (detect, attempt bypass, send if successful)
+  4. Deferred (store to phext, send when connectivity appears)
+```
+
+**Open WiFi join policy (theft mode only):**
+- Scans for open (no auth required) networks
+- Joins automatically — **only in theft mode**, never in normal operation
+- Sends a minimal encrypted packet to the owner's SQ relay endpoint
+- Disconnects immediately after send
+- The SQ relay endpoint is a simple HTTPS POST receiver — owner configures the URL during initiation
+
+**Alert payload with location:**
+```json
+{
+  "event": "theft",
+  "droid_id": "exodroid-scout-abc123",
+  "owner_hash": "woven-riv",
+  "timestamp": "2026-03-22T14:33:00Z",
+  "location": {
+    "gps": { "lat": 41.2565, "lon": -95.9345, "acc_m": 4.1, "fix": "3d" },
+    "wifi_visible": ["Ranch-Main (aa:bb:cc:dd:ee:ff)", "Neighbor-2.4G"],
+    "last_gps_fix": "2026-03-22T14:31:00Z",
+    "connectivity": "open-wifi"
+  },
+  "battery_pct": 67,
+  "evidence_count": 4,
+  "maps_url": "https://maps.google.com/?q=41.2565,-95.9345"
+}
+```
+
+Owner receives:
+> 🚨 **Scout has been taken.**
+> 📍 41.2565, -95.9345 (±4m) — [Open in Maps](https://maps.google.com/?q=41.2565,-95.9345)
+> 🔋 67% · 📷 4 photos · via open-wifi
+> WiFi visible: Ranch-Main, Neighbor-2.4G
+> — 2:33 PM
+
+**Indoor fallback — WiFi fingerprint:**
+When GPS fix is unavailable (indoors), the BSSID list + RSSI values are sent instead. The owner can cross-reference with known networks to determine the building. Combined with the last outdoor GPS fix from the pre-theft log, this narrows the search to a specific structure.
+
+### Privacy Firewall
+
+GPS and WiFi data are **never** used in normal operation for anything other than:
+- Owner-visible location history (encrypted, local)
+- Theft alert (owner-initiated by the theft event itself)
+
+Specifically:
+- No geofencing without explicit owner config
+- No location data shared via resonance (not even Family tier)
+- No location data sent to any server except owner's SQ relay
+- Open WiFi join **only** in confirmed theft mode — this state is tamper-evident (logged to encrypted audit scroll with IMU data that triggered it)
+
+### Hardware Integration
+
+```rust
+// GPS reader — runs on Pi 4 (mesh/motor node) via UART
+pub struct GpsReader {
+    port: SerialPort,
+    last_fix: Option<GpsFix>,
+}
+
+impl GpsReader {
+    pub fn poll(&mut self) -> Option<GpsFix> {
+        // Parse NMEA GPRMC sentence
+        // Return fix only if quality >= 1 (valid) and hdop < 5.0
+    }
+}
+
+// WiFi scanner — passive scan, no association
+pub fn scan_bssids() -> Vec<WifiAp> {
+    // iw dev wlan0 scan passive
+    // parse: SSID, BSSID, signal (dBm)
+    // returns Vec<WifiAp> sorted by RSSI descending
+}
+
+// Opportunistic sender — theft mode only
+pub async fn send_location_alert(fix: &GpsFix, wifi: &[WifiAp]) -> Result<()> {
+    // Try Tailscale first
+    if tailscale_up().await {
+        return send_via_tailscale(fix, wifi).await;
+    }
+    // Scan for open WiFi
+    for ap in wifi.iter().filter(|a| a.auth == Auth::Open) {
+        if join_open_wifi(&ap.bssid).await.is_ok() {
+            let result = send_to_sq_relay(fix, wifi).await;
+            leave_wifi().await;
+            return result;
+        }
+    }
+    // Defer — store to phext, retry on next scan cycle
+    store_deferred_alert(fix, wifi).await
+}
+```
+
+---
+
 ## Implementation Checklist
 
 ```
@@ -332,6 +474,10 @@ firmware/
     imu_classifier.rs      # MotionState classifier (lifted/rolling/resting)
     led_theft.rs           # SOS pattern, alert patterns
     motor_theft.rs         # Erratic movement, resting stop
+    gps_reader.rs          # u-blox NEO-M8N UART NMEA parser, fix quality filter
+    wifi_scanner.rs        # passive BSSID scan via iw, RSSI sort
+    location_logger.rs     # 5-min normal log, 30s theft log → phext
+    opportunistic_send.rs  # Tailscale → open WiFi → captive portal → deferred
 
 docs/
   THEFT-PROTECTION.md      # This document
@@ -347,7 +493,7 @@ docs/
 
 **Why face detection but not face recognition?** Face recognition requires storing a database of faces, raises privacy concerns, and is computationally expensive on Pi hardware. Simple presence detection ("I can see you — this is being documented") achieves the social deterrent effect without the infrastructure.
 
-**Why not GPS?** No GPS in the base spec. The Tailscale IP gives a rough network-topology location, and the camera provides physical evidence. GPS would require an additional module, antenna, and power budget. Worth adding as a v2 option for the SENTINEL archetype.
+**GPS + opportunistic WiFi** are included in the standard spec — see the Location Layer section above. Together they provide sub-10m outdoor precision (GPS), venue-level indoor resolution (WiFi SSID/BSSID), and mesh delivery the moment connectivity exists (Tailscale over WiFi).
 
 **Why allow "I found you" to reduce volume?** A good-faith finder who found the droid should not be harassed. Making the droid obnoxious to a person trying to help is counterproductive — they'll abandon it or destroy it. The volume reduction is a social protocol for "I acknowledge you; please help me get home."
 

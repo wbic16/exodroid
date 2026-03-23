@@ -65,13 +65,14 @@
 | INA219 I2C voltage/current monitor | 1 | $3 |
 | XT60 panel-mount charge port | 1 | $3 |
 
-### Connectivity ($22)
+### Connectivity ($37)
 | Part | Qty | Cost |
 |------|-----|------|
 | SMA WiFi antenna pigtail (visible head antenna) | 1 | $5 |
 | HC-SR04 ultrasonic sensor | 1 | $2 |
 | Micro-SD card (seed backup) | 1 | $5 |
 | JST connectors, wire, heat shrink | 1 lot | $10 |
+| u-blox NEO-M8N GPS module (ceramic patch antenna) | 1 | $15 |
 
 ### Flash Cards ($5)
 | Part | Qty | Cost |
@@ -79,7 +80,7 @@
 | Starter deck (20 cards, laser printed) | 1 set | $3 |
 | Blank card stock (custom cards) | 10 sheets | $2 |
 
-### Shared subtotal: $363
+### Shared subtotal: $378
 
 ---
 
@@ -95,7 +96,7 @@ Clean, simple, reliable. Oil acts as thermal mass + diffuser for LED light.
 | USB submersible aquarium pump | 1 | $8 |
 | Silicone grommets (cable pass-through) | 6 | $5 |
 
-### Variant A total: $363 + $30 = **$393**
+### Variant A total: $378 + $30 = **$408**
 
 **Visual:** Clear/slightly golden liquid. LED light passes cleanly through oil.
 Pi boards clearly visible as dark silhouettes. Clean, technical aesthetic.
@@ -120,7 +121,7 @@ Each droid's dust color matches its coordinate-derived LED color.
 | USB submersible aquarium pump (required — keeps dust suspended) | 1 | $8 |
 | Silicone grommets (cable pass-through) | 6 | $5 |
 
-### Variant B total: $363 + $37 = **$400**
+### Variant B total: $378 + $37 = **$415**
 
 **Visual:** Metallic/pearlescent particles suspended in oil. LED light catches
 particles at different angles = galaxy/universe effect. When the droid rolls,
@@ -212,11 +213,10 @@ coordinate data, personality markers, and scroll history as a continuous ticker.
 ## BOM Summary
 
 | | Variant A (Oil) | Variant B (Dust) |
-|--|----------------|-----------------|
-| Shared components | $363 | $363 |
+|--|----------------|-----------------|\n| Shared components | $378 | $378 |
 | Fluid system | $30 | $37 |
-| **Total per droid** | **$393** | **$400** |
-| **5-unit demo set** | **$1,965** | **$2,000** |
+| **Total per droid** | **$408** | **$415** |
+| **5-unit demo set** | **$2,040** | **$2,075** |
 
 ---
 
@@ -229,7 +229,7 @@ with engineered suspended particles) can replace mineral oil entirely.
 |------|-----|------|
 | PrimoChill Vue (1L bottle, color-matched) | 2 | $60 |
 
-**Vue variant total: $363 + $68 = $431**
+**Vue variant total: $378 + $68 = $446**
 
 Vue is engineered for electronics immersion, non-conductive, with consistent
 particle suspension. Professional-grade galaxy effect. But not food-grade,
