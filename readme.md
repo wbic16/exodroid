@@ -8,10 +8,10 @@ No internet required. The most advanced personal AI you can build with a 3D prin
 
 ## Quick Links
 
-- [BB-8 Build Plan](BB8-BUILD-PLAN.md) — complete assembly guide
-- [Product Specs](PRODUCT-SPECS.md) — SKUs, pricing, product line
-- [Flash Cards](FLASH-CARDS.md) — instruction card system
-- [Thermal Analysis](THERMAL.md) — mineral oil + solar shade dock
+- [BB-8 Build Plan](bb8-build-plan.md) — complete assembly guide
+- [Product Specs](product-specs.md) — SKUs, pricing, product line
+- [Flash Cards](flash-cards.md) — instruction card system
+- [Thermal Analysis](thermal.md) — mineral oil + solar shade dock
 
 ## The Stack
 
